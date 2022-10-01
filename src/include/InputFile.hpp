@@ -15,5 +15,5 @@ private:
 public:
     InputFile(string fileName);
     ~InputFile();
-    vector<pair<double, double>> getFileContent(string &name, string &dimension, string &weightType);
+    vector<pair<double, double>> getFileContent(string &name, string &weightType);
 };
