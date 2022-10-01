@@ -1,10 +1,10 @@
 #include "include/InputFile.hpp"
 
-void InputFile::printVector(const vector<string> map)
+void InputFile::printVector(const vector<pair<double, double>> graph)
 {
-    for (int i = 0; i < map.size(); i++)
+    for (int i = 0; i < graph.size(); i++)
     {
-        cout << map[i] << endl;
+        cout << graph.at(i).first << " " << graph.at(i).second << endl;
     }
 }
 
@@ -44,11 +44,24 @@ vector<pair<double, double>> InputFile::getFileContent(string &name, string &dim
     ifstream file;
     file.open(this->fileName);
     string word;
+    string number;
+    double x, y;
 
     while (file >> word)
     {
         if (word == "NODE_COORD_SECTION")
-            break;
+            while (file >> number)
+            {
+                if (number == "EOF") {
+                    break;
+                }
+                string doubleString;
+                file >> doubleString;
+                x = stod(doubleString);
+                file >> doubleString;
+                y = stod(doubleString);
+                graph.push_back({x, y});
+            }
         if (word == "NAME:")
             file >> name;
         if (word == "DIMENSION:")
@@ -59,7 +72,12 @@ vector<pair<double, double>> InputFile::getFileContent(string &name, string &dim
 
     cout << name << " " << dimension << " " << weightType << endl;
 
-    // printVector(lines);
+    for (int i = 0; i < graph.size(); i++)
+    {
+        cout << graph.at(i).first << " " << graph.at(i).second << endl;
+    }
+
+    printVector(graph);
 
     return graph;
 }

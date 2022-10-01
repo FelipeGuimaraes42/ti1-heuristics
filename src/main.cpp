@@ -7,7 +7,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-	string name, dimension, weightType, garb, str;
+	string name, dimension, weightType, str;
 
     string fileName(argv[1]);
     InputFile inputFile(fileName);
