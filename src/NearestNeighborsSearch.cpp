@@ -32,6 +32,7 @@ double NearestNeighborsSearch::getPseudoEuclideanDistance(const pair<double, dou
 
 double NearestNeighborsSearch::tsp(const string weightType)
 {
+    srand(time(0));
     int n = this->points.size();
 
     bitset<64> visitedCities, allOnes;
@@ -72,5 +73,5 @@ double NearestNeighborsSearch::tsp(const string weightType)
         u = nxtV;
     }
 
-    return (ansNNTSP + (weightType == "EUC_2D" ? getEuclideanDistance(this->points[s], this->points[u]) : getPseudoEuclideanDistance(this->points[s], this->points[u]))) / 1000.0;
+    return ansNNTSP + (weightType == "EUC_2D" ? getEuclideanDistance(this->points[s], this->points[u]) : getPseudoEuclideanDistance(this->points[s], this->points[u]));
 }
