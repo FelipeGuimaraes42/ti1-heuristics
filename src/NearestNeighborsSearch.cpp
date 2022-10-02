@@ -35,43 +35,59 @@ double NearestNeighborsSearch::tsp(const string weightType)
     srand(time(0));
     int n = this->points.size();
 
-    bitset<64> visitedCities, allOnes;
+    bool visitedCities[n] = {false};
 
-    allOnes.set();
+    int first = rand() % n;
+    visitedCities[first] = true;
 
-    for (int i = n; i < 64; i++)
-        visitedCities[i] = 1;
+    int u = first;
 
-    int s = rand() % n;
+    double result = 0;
 
-    visitedCities[s] = 1;
-
-    int u = s;
-
-    double ansNNTSP = 0;
-
-    while ((visitedCities & allOnes) != allOnes)
+    while (true)
     {
-        int nxtV = -1, nxtDist = INF;
+        bool run = false;
+        for (int i = 0; i < n; i++)
+        {
+            if (visitedCities[i] == false)
+            {
+                run = true;
+            }
+        }
+        if (!run)
+        {
+            break;
+        }
+
+        int distance = INF;
+        int vertice = -1;
 
         for (int v = 0; v < n; v++)
         {
             if (!visitedCities[v])
             {
-                double currDist = weightType == "EUC_2D" ? getEuclideanDistance(this->points[u], this->points[v]) : getPseudoEuclideanDistance(this->points[u], this->points[v]);
-
-                if (currDist < nxtDist)
+                double currentDistance;
+                if (weightType == "EUC_2D")
                 {
-                    nxtV = v;
-                    nxtDist = currDist;
+                    currentDistance = getEuclideanDistance(this->points[u], this->points[v]);
+                }
+                else
+                {
+                    currentDistance = getPseudoEuclideanDistance(this->points[u], this->points[v]);
+                }
+
+                if (currentDistance < distance)
+                {
+                    vertice = v;
+                    distance = currentDistance;
                 }
             }
         }
 
-        visitedCities[nxtV] = 1;
-        ansNNTSP += nxtDist;
-        u = nxtV;
+        visitedCities[vertice] = true;
+        result += distance;
+        u = vertice;
     }
 
-    return ansNNTSP + (weightType == "EUC_2D" ? getEuclideanDistance(this->points[s], this->points[u]) : getPseudoEuclideanDistance(this->points[s], this->points[u]));
+    return result + (weightType == "EUC_2D" ? getEuclideanDistance(this->points[first], this->points[u]) : getPseudoEuclideanDistance(this->points[first], this->points[u]));
 }
