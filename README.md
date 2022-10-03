@@ -1,2 +1,17 @@
-## Trabalho de Implementação 1
-### Heurísticas e Metaheurísticas
+# First Implementation Work
+## Heuristics and Metaheuristics
+
+### How to Run
+To run this project, you need to first use the following command to compile the project (inside the src directory):
+
+``` g++ -o main main.cpp InputFile.cpp NearestNeighborsSearch.cpp ```
+
+After compiling, you need to run the executable passing a file.tsp inside the testCases directory
+
+``` ./main ../testCases/berlin52.tsp ```
+
+### Response
+The code response 3 fields: 
+- the name of the file;
+- the distance method;
+- the heuristic response
